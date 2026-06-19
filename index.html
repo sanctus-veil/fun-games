@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎮 小游戏合集</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #0a0a2e, #1a1a4e, #0a2a3e);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #fff;
+}
+h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.sub { color: rgba(255,255,255,0.5); margin-bottom: 40px; font-size: 15px; }
+.cards { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 32px;
+    width: 260px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+}
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.card .icon { font-size: 56px; margin-bottom: 16px; }
+.card h2 { font-size: 20px; margin-bottom: 8px; }
+.card p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+</style>
+</head>
+<body>
+<h1>🎮 小游戏合集</h1>
+<p class="sub">好玩的前端小项目，点击即玩</p>
+<div class="cards">
+    <a class="card" href="pixel-art.html">
+        <div class="icon">🎨</div>
+        <h2>像素画板</h2>
+        <p>选颜色在格子上画画<br>支持橡皮擦、填充、导出</p>
+    </a>
+    <a class="card" href="star-particles.html">
+        <div class="icon">🌌</div>
+        <h2>星空粒子</h2>
+        <p>鼠标带出彩色粒子尾巴<br>点击放烟花，4种模式</p>
+    </a>
+    <a class="card" href="music-visualizer.html">
+        <div class="icon">🎵</div>
+        <h2>音乐可视化</h2>
+        <p>选一首音乐<br>4种炫酷可视化效果</p>
+    </a>
+    <a class="card" href="love-hearts.html">
+        <div class="icon">💕</div>
+        <h2>满屏爱心</h2>
+        <p>满屏飘爱心/星星/雪花<br>输入文字，点击发射</p>
+    </a>
+    <a class="card" href="love-letter.html">
+        <div class="icon">💌</div>
+        <h2>打字机情书</h2>
+        <p>逐字出现的情书<br>可自定义内容</p>
+    </a>
+    <a class="card" href="holiday-greeting.html">
+        <div class="icon">🎆</div>
+        <h2>节日祝福烟花</h2>
+        <p>满屏烟花+祝福语<br>点击放烟花</p>
+    </a>
+</div>
+</body>
+</html>

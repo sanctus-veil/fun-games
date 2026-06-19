@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎨 像素画板</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #1a1a2e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #eee;
+}
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.toolbar label {
+    font-size: 14px;
+    color: #aaa;
+}
+.color-picker {
+    width: 40px; height: 40px;
+    border: none; border-radius: 8px;
+    cursor: pointer;
+    background: none;
+}
+.color-picker::-webkit-color-swatch-wrapper { padding: 2px; }
+.color-picker::-webkit-color-swatch { border: none; border-radius: 6px; }
+.preset-colors {
+    display: flex; gap: 6px; flex-wrap: wrap;
+}
+.preset {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+.preset:hover, .preset.active {
+    border-color: #fff;
+    transform: scale(1.2);
+}
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-tool {
+    background: #2d2d4e;
+    color: #ccc;
+}
+.btn-tool:hover, .btn-tool.active {
+    background: #4d96ff;
+    color: #fff;
+}
+.btn-action {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: #fff;
+}
+.btn-action:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,107,107,0.4); }
+.btn-export {
+    background: linear-gradient(135deg, #6bcb77, #2d8a3e);
+    color: #fff;
+}
+.btn-export:hover { transform: translateY(-2px); }
+.size-control {
+    display: flex; align-items: center; gap: 8px;
+}
+.size-control input {
+    width: 60px;
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #2d2d4e;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+.canvas-wrapper {
+    background: #16213e;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    overflow: auto;
+    max-width: 95vw;
+    max-height: 70vh;
+}
+canvas {
+    display: block;
+    cursor: crosshair;
+    border-radius: 4px;
+    image-rendering: pixelated;
+}
+.info {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h1>🎨 像素画板</h1>
+
+<div class="toolbar">
+    <div class="preset-colors" id="presets"></div>
+    <input type="color" class="color-picker" id="colorPicker" value="#ff6b6b">
+    <span>|</span>
+    <button class="btn btn-tool active" data-tool="draw" onclick="setTool('draw')">✏️ 画笔</button>
+    <button class="btn btn-tool" data-tool="erase" onclick="setTool('erase')">🧹 橡皮</button>
+    <button class="btn btn-tool" data-tool="fill" onclick="setTool('fill')">🪣 填充</button>
+    <span>|</span>
+    <div class="size-control">
+        <label>网格:</label>
+        <input type="number" id="gridSize" value="32" min="8" max="64" onchange="initCanvas()">
+    </div>
+    <span>|</span>
+    <button class="btn btn-action" onclick="clearCanvas()">🗑️ 清空</button>
+    <button class="btn btn-export" onclick="exportImage()">💾 导出</button>
+</div>
+
+<div class="canvas-wrapper">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="info">左键画画 · 右键擦除 · 拖动连续绘制</div>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const colorPicker = document.getElementById('colorPicker');
+
+let gridSize = 32;
+let cellSize = 16;
+let currentColor = '#ff6b6b';
+let currentTool = 'draw';
+let isDrawing = false;
+let pixels = [];
+
+const presetColors = [
+    '#ff6b6b','#ee5a24','#ffd93d','#6bcb77','#4d96ff','#a55eea',
+    '#fd79a8','#00cec9','#2d3436','#636e72','#ffffff','#1a1a2e',
+    '#f8b500','#f97f51','#1B9CFC','#58B19F'
+];
+
+// 初始化预设颜色
+const presetsEl = document.getElementById('presets');
+presetColors.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'preset' + (c === currentColor ? ' active' : '');
+    div.style.background = c;
+    div.onclick = () => {
+        currentColor = c;
+        colorPicker.value = c;
+        document.querySelectorAll('.preset').forEach(p => p.classList.remove('active'));
+        div.classList.add('active');
+        setTool('draw');
+    };
+    presetsEl.appendChild(div);
+});
+
+colorPicker.oninput = (e) => {
+    currentColor = e.target.value;
+    document.querySelectorAll('.preset').forEach(p => p.classList.remove('active'));
+};
+
+function setTool(tool) {
+    currentTool = tool;
+    document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
+    document.querySelector(`[data-tool="${tool}"]`).classList.add('active');
+}
+
+function initCanvas() {
+    gridSize = parseInt(document.getElementById('gridSize').value) || 32;
+    gridSize = Math.max(8, Math.min(64, gridSize));
+    cellSize = Math.max(8, Math.min(20, Math.floor(520 / gridSize)));
+    canvas.width = gridSize * cellSize;
+    canvas.height = gridSize * cellSize;
+
+    // 初始化像素数组
+    pixels = [];
+    for (let y = 0; y < gridSize; y++) {
+        pixels[y] = [];
+        for (let x = 0; x < gridSize; x++) {
+            pixels[y][x] = null;
+        }
+    }
+    drawGrid();
+}
+
+function drawGrid() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 绘制像素
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            if (pixels[y][x]) {
+                ctx.fillStyle = pixels[y][x];
+                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            } else {
+                // 棋盘格背景
+                ctx.fillStyle = (x + y) % 2 === 0 ? '#1e2a4a' : '#1a2540';
+                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            }
+        }
+    }
+    // 网格线
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= gridSize; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * cellSize, 0);
+        ctx.lineTo(i * cellSize, canvas.height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i * cellSize);
+        ctx.lineTo(canvas.width, i * cellSize);
+        ctx.stroke();
+    }
+}
+
+function getCell(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) / cellSize);
+    const y = Math.floor((e.clientY - rect.top) / cellSize);
+    return { x: Math.max(0, Math.min(gridSize - 1, x)), y: Math.max(0, Math.min(gridSize - 1, y)) };
+}
+
+function setPixel(x, y, color) {
+    if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+        pixels[y][x] = color;
+        ctx.fillStyle = color || ((x + y) % 2 === 0 ? '#1e2a4a' : '#1a2540');
+        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    }
+}
+
+function floodFill(x, y, targetColor, fillColor) {
+    if (x < 0 || x >= gridSize || y < 0 || y >= gridSize) return;
+    if (pixels[y][x] !== targetColor) return;
+    if (targetColor === fillColor) return;
+    pixels[y][x] = fillColor;
+    floodFill(x + 1, y, targetColor, fillColor);
+    floodFill(x - 1, y, targetColor, fillColor);
+    floodFill(x, y + 1, targetColor, fillColor);
+    floodFill(x, y - 1, targetColor, fillColor);
+}
+
+canvas.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    isDrawing = true;
+    const { x, y } = getCell(e);
+
+    if (currentTool === 'fill') {
+        const target = pixels[y][x];
+        floodFill(x, y, target, e.button === 2 ? null : currentColor);
+        drawGrid();
+        return;
+    }
+
+    const color = (currentTool === 'erase' || e.button === 2) ? null : currentColor;
+    setPixel(x, y, color);
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    if (!isDrawing) return;
+    const { x, y } = getCell(e);
+    const color = (currentTool === 'erase' || e.buttons === 2) ? null : currentColor;
+    setPixel(x, y, color);
+});
+
+canvas.addEventListener('mouseup', () => isDrawing = false);
+canvas.addEventListener('mouseleave', () => isDrawing = false);
+canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+function clearCanvas() {
+    for (let y = 0; y < gridSize; y++)
+        for (let x = 0; x < gridSize; x++)
+            pixels[y][x] = null;
+    drawGrid();
+}
+
+function exportImage() {
+    const exportCanvas = document.createElement('canvas');
+    exportCanvas.width = gridSize * 16;
+    exportCanvas.height = gridSize * 16;
+    const ectx = exportCanvas.getContext('2d');
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            if (pixels[y][x]) {
+                ectx.fillStyle = pixels[y][x];
+                ectx.fillRect(x * 16, y * 16, 16, 16);
+            }
+        }
+    }
+    const a = document.createElement('a');
+    a.download = 'pixel-art.png';
+    a.href = exportCanvas.toDataURL();
+    a.click();
+}
+
+initCanvas();
+</script>
+</body>
+</html>
