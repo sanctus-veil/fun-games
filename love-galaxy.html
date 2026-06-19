@@ -7,128 +7,91 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    background: #1e1e28;
+    background: #12101c;
     overflow: hidden;
     font-family: 'STKaiti', 'KaiTi', 'PingFang SC', 'Georgia', serif;
     min-height: 100vh;
 }
 canvas { position: fixed; top: 0; left: 0; }
 .ui {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     pointer-events: none;
 }
 .main-text {
-    font-size: 40px;
-    font-weight: 600;
-    letter-spacing: 6px;
-    /* 莫兰迪粉灰渐变 */
-    background: linear-gradient(135deg, #c9a8a0, #d4c0b5, #bfa8a0, #c4b0a8);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 5s ease infinite;
-    filter: drop-shadow(0 0 20px rgba(196,168,160,0.3));
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-align: center;
-    padding: 0 20px;
+    font-size: 40px; font-weight: 600; letter-spacing: 6px;
+    background: linear-gradient(135deg, #d4a0a0, #e8c4b8, #c8a0b8, #d8b8a8, #e0c8b0);
+    background-size: 400% 400%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shimmer 6s ease infinite;
+    filter: drop-shadow(0 0 30px rgba(200,160,160,0.35));
+    opacity: 0; transform: scale(0.5);
+    transition: all 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center; padding: 0 20px;
 }
-.main-text.show {
-    opacity: 1;
-    transform: scale(1);
-}
+.main-text.show { opacity: 1; transform: scale(1); }
 .sub-text {
-    font-size: 17px;
-    color: rgba(190,175,165,0.6);
-    margin-top: 20px;
-    letter-spacing: 10px;
-    font-weight: 300;
-    opacity: 0;
-    transition: opacity 2.5s 1.2s;
-    text-align: center;
-    padding: 0 20px;
+    font-size: 17px; color: rgba(200,180,170,0.5);
+    margin-top: 20px; letter-spacing: 10px; font-weight: 300;
+    opacity: 0; transition: opacity 3s 1.5s;
+    text-align: center; padding: 0 20px;
 }
 .sub-text.show { opacity: 1; }
 @keyframes shimmer {
-    0%, 100% { background-position: 0% 50%; }
+    0%,100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
 }
 .controls {
-    position: fixed;
-    bottom: 24px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    pointer-events: all;
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%); z-index: 100;
+    display: flex; gap: 10px; flex-wrap: wrap;
+    justify-content: center; pointer-events: all;
 }
 .btn {
-    padding: 10px 22px;
-    border: none;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
-    backdrop-filter: blur(10px);
+    padding: 10px 22px; border: none; border-radius: 25px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: all 0.3s; backdrop-filter: blur(10px);
     letter-spacing: 1px;
 }
-/* 莫兰迪灰棕按钮 */
 .btn-main {
-    background: rgba(168,148,138,0.25);
-    color: rgba(210,195,185,0.85);
-    border: 1px solid rgba(168,148,138,0.2);
+    background: rgba(180,140,140,0.2);
+    color: rgba(220,195,185,0.85);
+    border: 1px solid rgba(180,140,140,0.15);
 }
 .btn-main:hover {
-    background: rgba(168,148,138,0.4);
-    color: #e0d5cc;
-    transform: translateY(-2px);
+    background: rgba(180,140,140,0.35);
+    color: #e8d8cc; transform: translateY(-2px);
 }
 .btn-outline {
-    background: rgba(255,255,255,0.04);
-    color: rgba(190,175,165,0.6);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    color: rgba(200,180,170,0.5);
+    border: 1px solid rgba(255,255,255,0.06);
 }
 .btn-outline:hover {
-    background: rgba(255,255,255,0.08);
-    color: rgba(210,195,185,0.8);
+    background: rgba(255,255,255,0.06);
+    color: rgba(220,195,185,0.7);
 }
 .msg-input {
     padding: 10px 20px;
-    border: 1px solid rgba(168,148,138,0.2);
-    border-radius: 25px;
-    background: rgba(30,30,40,0.7);
-    color: rgba(210,195,185,0.8);
-    font-size: 15px;
-    width: 200px;
-    text-align: center;
-    outline: none;
-    backdrop-filter: blur(10px);
-    letter-spacing: 1px;
+    border: 1px solid rgba(180,140,140,0.15);
+    border-radius: 25px; background: rgba(20,18,28,0.7);
+    color: rgba(220,195,185,0.8); font-size: 15px;
+    width: 200px; text-align: center; outline: none;
+    backdrop-filter: blur(10px); letter-spacing: 1px;
     font-family: inherit;
 }
-.msg-input:focus { border-color: rgba(168,148,138,0.5); }
-.msg-input::placeholder { color: rgba(168,148,138,0.3); }
+.msg-input:focus { border-color: rgba(180,140,140,0.4); }
+.msg-input::placeholder { color: rgba(180,140,140,0.25); }
 </style>
 </head>
 <body>
-
 <canvas id="canvas"></canvas>
-
 <div class="ui">
     <div class="main-text" id="mainText">余生请多指教 ✨</div>
     <div class="sub-text" id="subText">你是我宇宙中最温柔的光</div>
 </div>
-
 <div class="controls">
     <input class="msg-input" id="msgInput" placeholder="输入你想说的话" value="余生请多指教">
     <button class="btn btn-main" onclick="showText()">✦ 显示</button>
@@ -137,259 +100,271 @@ canvas { position: fixed; top: 0; left: 0; }
 </div>
 
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [], heartParticles = [], beatMode = true, beatScale = 1, beatDir = 1;
-let frame = 0;
+const C = document.getElementById('canvas');
+const X = C.getContext('2d');
+let W, H, frame = 0;
+let beatMode = true, beatScale = 1, beatDir = 1;
+let heartPts = [], floatPts = [], trails = [];
 
-function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+function resize() { W = C.width = window.innerWidth; H = C.height = window.innerHeight; }
 resize();
 window.addEventListener('resize', resize);
 
-// 莫兰迪配色
-const MORANDI = {
-    // 心形粒子色（灰粉、灰紫、灰棕）
+// ============ 莫兰迪高级配色（饱满版）============
+const PAL = {
+    // 心形粒子：深玫瑰、暖豆沙、灰紫、暖棕、烟粉
     heart: [
-        {h:10, s:25, l:68},  // 灰粉
-        {h:20, s:20, l:65},  // 灰棕
-        {h:350, s:18, l:66}, // 灰玫瑰
-        {h:30, s:22, l:70},  // 暖灰
-        {h:280, s:12, l:68}, // 灰紫
+        {h:8,  s:45, l:62},  // 深玫瑰
+        {h:15, s:38, l:58},  // 暖豆沙
+        {h:345,s:30, l:60},  // 灰紫玫瑰
+        {h:25, s:35, l:65},  // 暖棕
+        {h:350,s:25, l:63},  // 烟粉
+        {h:20, s:42, l:55},  // 焦糖
     ],
-    // 星云色（灰蓝、灰绿、灰紫）
+    // 星云：灰蓝、灰绿、灰紫、暖灰
     nebula: [
-        {h:210, s:15, l:45}, // 灰蓝
-        {h:150, s:12, l:42}, // 灰绿
-        {h:270, s:10, l:45}, // 灰紫
-        {h:30, s:15, l:48},  // 灰棕
+        {h:210,s:25, l:38},
+        {h:160,s:18, l:35},
+        {h:280,s:15, l:38},
+        {h:30, s:20, l:40},
     ],
-    // 背景
-    bgInner: 'rgba(35, 32, 42, 0.12)',
-    bgOuter: 'rgba(22, 22, 30, 0.12)',
-    // 星星
-    star: 'rgba(200, 195, 190, ',
+    // 轨迹色
+    trail: {h:15, s:35, l:55},
 };
 
-function randMorandi(arr) {
-    const c = arr[Math.floor(Math.random() * arr.length)];
-    return {h: c.h + (Math.random()-0.5)*10, s: c.s + (Math.random()-0.5)*5, l: c.l + (Math.random()-0.5)*8};
+function randC(arr) {
+    const c = arr[Math.floor(Math.random()*arr.length)];
+    return {h:c.h+(Math.random()-.5)*8, s:c.s+(Math.random()-.5)*6, l:c.l+(Math.random()-.5)*6};
+}
+function hsl(c,a) { return `hsla(${c.h},${c.s}%,${c.l}%,${a||1})`; }
+
+// ============ 心形方程 ============
+function heartXY(t, sc) {
+    const x = 16*Math.pow(Math.sin(t),3);
+    const y = -(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+    return {x:x*sc, y:y*sc};
 }
 
-// 心形参数方程
-function heartPoint(t, scale) {
-    const x = 16 * Math.pow(Math.sin(t), 3);
-    const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
-    return { x: x * scale, y: y * scale };
-}
-
-// 创建心形粒子
+// ============ 创建心形粒子（多层3D深度）============
 function createHeart() {
-    heartParticles = [];
-    const scale = Math.min(W, H) * 0.013;
-    const cx = W / 2, cy = H / 2 - 30;
-    const count = 300;
+    heartPts = [];
+    const sc = Math.min(W,H)*0.013;
+    const cx = W/2, cy = H/2-30;
 
-    for (let i = 0; i < count; i++) {
-        const t = (i / count) * Math.PI * 2;
-        const p = heartPoint(t, scale);
-        const spread = Math.random() * scale * 0.8;
-        const angle = Math.random() * Math.PI * 2;
-        const mc = randMorandi(MORANDI.heart);
-        heartParticles.push({
-            baseX: cx + p.x + Math.cos(angle) * spread * 0.3,
-            baseY: cy + p.y + Math.sin(angle) * spread * 0.3,
-            x: cx + p.x, y: cy + p.y,
-            size: Math.random() * 2.5 + 0.8,
-            speed: Math.random() * 0.015 + 0.008,
-            angle: Math.random() * Math.PI * 2,
-            h: mc.h, s: mc.s, l: mc.l,
-            alpha: Math.random() * 0.4 + 0.4,
-            orbit: Math.random() * 4 + 2
-        });
-    }
+    // 三层深度：前景、中景、远景
+    const layers = [
+        {count:200, zRange:[0.7,1],   sizeRange:[2,3.5], alphaRange:[0.7,0.9], orbitRange:[2,4]},
+        {count:120, zRange:[0.4,0.7], sizeRange:[1.2,2], alphaRange:[0.4,0.6], orbitRange:[4,7]},
+        {count:80,  zRange:[0.1,0.4], sizeRange:[0.5,1], alphaRange:[0.15,0.3], orbitRange:[6,10]},
+    ];
+
+    layers.forEach(layer => {
+        for (let i = 0; i < layer.count; i++) {
+            const t = (i/layer.count)*Math.PI*2;
+            const p = heartXY(t, sc);
+            const sp = Math.random()*sc*0.6;
+            const a = Math.random()*Math.PI*2;
+            const z = layer.zRange[0]+Math.random()*(layer.zRange[1]-layer.zRange[0]);
+            const mc = randC(PAL.heart);
+            heartPts.push({
+                baseX: cx+p.x+Math.cos(a)*sp*0.3,
+                baseY: cy+p.y+Math.sin(a)*sp*0.3,
+                x:0, y:0, z:z,
+                size: layer.sizeRange[0]+Math.random()*(layer.sizeRange[1]-layer.sizeRange[0]),
+                speed: 0.008+Math.random()*0.015,
+                angle: Math.random()*Math.PI*2,
+                h:mc.h, s:mc.s, l:mc.l,
+                alpha: layer.alphaRange[0]+Math.random()*(layer.alphaRange[1]-layer.alphaRange[0]),
+                orbit: layer.orbitRange[0]+Math.random()*(layer.orbitRange[1]-layer.orbitRange[0]),
+                // 轨迹
+                trail: [],
+                trailLen: 5+Math.floor(Math.random()*8)
+            });
+        }
+    });
 }
 
-// 星空背景
-const stars = Array.from({length: 250}, () => ({
-    x: Math.random() * 3000, y: Math.random() * 3000,
-    r: Math.random() * 1.5 + 0.3,
-    twinkle: Math.random() * 6.28,
-    speed: Math.random() * 0.3 + 0.05
+// ============ 星空 ============
+const stars = Array.from({length:200}, ()=>({
+    x:Math.random()*3000, y:Math.random()*3000,
+    r:Math.random()*1.5+0.2, tw:Math.random()*6.28, sp:Math.random()*0.2+0.03
 }));
-
-const nebulae = Array.from({length: 4}, () => {
-    const c = MORANDI.nebula[Math.floor(Math.random() * MORANDI.nebula.length)];
-    return {
-        x: Math.random() * 2000, y: Math.random() * 2000,
-        r: Math.random() * 250 + 120,
-        h: c.h, s: c.s, l: c.l,
-        alpha: Math.random() * 0.04 + 0.015
-    };
+const nebulae = Array.from({length:4}, ()=>{
+    const c = PAL.nebula[Math.floor(Math.random()*PAL.nebula.length)];
+    return {x:Math.random()*2000, y:Math.random()*2000, r:Math.random()*300+150,
+            h:c.h, s:c.s, l:c.l, a:Math.random()*0.035+0.01};
 });
 
 function drawBg() {
-    const gradient = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)*0.7);
-    gradient.addColorStop(0, MORANDI.bgInner);
-    gradient.addColorStop(1, MORANDI.bgOuter);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, W, H);
+    const g = X.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.7);
+    g.addColorStop(0,'rgba(28,24,38,0.1)');
+    g.addColorStop(1,'rgba(14,12,22,0.1)');
+    X.fillStyle = g;
+    X.fillRect(0,0,W,H);
 
-    // 星云
-    nebulae.forEach(n => {
-        const g = ctx.createRadialGradient(n.x%W, n.y%H, 0, n.x%W, n.y%H, n.r);
-        g.addColorStop(0, `hsla(${n.h}, ${n.s}%, ${n.l}%, ${n.alpha})`);
-        g.addColorStop(1, 'transparent');
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(n.x%W, n.y%H, n.r, 0, Math.PI*2);
-        ctx.fill();
+    nebulae.forEach(n=>{
+        const g=X.createRadialGradient(n.x%W,n.y%H,0,n.x%W,n.y%H,n.r);
+        g.addColorStop(0,`hsla(${n.h},${n.s}%,${n.l}%,${n.a})`);
+        g.addColorStop(1,'transparent');
+        X.fillStyle=g; X.beginPath(); X.arc(n.x%W,n.y%H,n.r,0,Math.PI*2); X.fill();
     });
 
-    // 星星
-    stars.forEach(s => {
-        s.twinkle += 0.015;
-        s.x += s.speed;
-        if (s.x > W+10) s.x = -10;
-        const alpha = 0.15 + Math.sin(s.twinkle) * 0.15;
-        ctx.fillStyle = MORANDI.star + alpha + ')';
-        ctx.beginPath();
-        ctx.arc(s.x, s.y%H, s.r, 0, Math.PI*2);
-        ctx.fill();
+    stars.forEach(s=>{
+        s.tw+=0.012; s.x+=s.sp; if(s.x>W+10)s.x=-10;
+        X.fillStyle=`rgba(200,195,190,${0.12+Math.sin(s.tw)*0.1})`;
+        X.beginPath(); X.arc(s.x,s.y%H,s.r,0,Math.PI*2); X.fill();
     });
 }
 
-// 绘制心形
+// ============ 绘制心形（带轨迹+连线）============
 function drawHeart() {
-    if (beatMode) {
-        beatScale += beatDir * 0.002;
-        if (beatScale > 1.06) beatDir = -1;
-        if (beatScale < 0.96) beatDir = 1;
-    }
+    if(beatMode){beatScale+=beatDir*0.002;if(beatScale>1.06)beatDir=-1;if(beatScale<0.96)beatDir=1;}
+    const cx=W/2, cy=H/2-30;
 
-    const cx = W/2, cy = H/2 - 30;
+    // 按z排序（远景先画）
+    heartPts.sort((a,b)=>a.z-b.z);
 
-    heartParticles.forEach(p => {
-        p.angle += p.speed;
-        const ox = Math.cos(p.angle) * p.orbit;
-        const oy = Math.sin(p.angle) * p.orbit;
-        let x = p.baseX + ox, y = p.baseY + oy;
-        if (beatMode) {
-            x = cx + (x - cx) * beatScale;
-            y = cy + (y - cy) * beatScale;
+    // 粒子连线（只连近距离的前景粒子）
+    X.save();
+    X.lineWidth = 0.3;
+    const fg = heartPts.filter(p=>p.z>0.6);
+    for(let i=0;i<fg.length;i++){
+        for(let j=i+1;j<Math.min(i+8,fg.length);j++){
+            const dx=fg[i].x-fg[j].x, dy=fg[i].y-fg[j].y;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<30){
+                X.globalAlpha=(1-dist/30)*0.08;
+                X.strokeStyle=hsl({h:fg[i].h,s:fg[i].s,l:fg[i].l},1);
+                X.beginPath(); X.moveTo(fg[i].x,fg[i].y); X.lineTo(fg[j].x,fg[j].y); X.stroke();
+            }
         }
-        p.x = x; p.y = y;
+    }
+    X.restore();
 
-        ctx.save();
-        ctx.globalAlpha = p.alpha * (0.6 + Math.sin(p.angle*2)*0.2);
-        ctx.fillStyle = `hsl(${p.h}, ${p.s}%, ${p.l}%)`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = `hsla(${p.h}, ${p.s}%, ${p.l-10}%, 0.4)`;
-        ctx.beginPath();
-        ctx.arc(x, y, p.size, 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
+    heartPts.forEach(p=>{
+        p.angle+=p.speed;
+        const ox=Math.cos(p.angle)*p.orbit;
+        const oy=Math.sin(p.angle)*p.orbit;
+        let x=p.baseX+ox, y=p.baseY+oy;
+        if(beatMode){x=cx+(x-cx)*beatScale;y=cy+(y-cy)*beatScale;}
+
+        // 轨迹
+        p.trail.unshift({x:x,y:y});
+        if(p.trail.length>p.trailLen) p.trail.pop();
+
+        p.x=x; p.y=y;
+
+        // 画轨迹
+        if(p.z>0.4 && p.trail.length>1){
+            X.save();
+            X.lineWidth = p.size*0.4*p.z;
+            X.lineCap = 'round';
+            for(let i=1;i<p.trail.length;i++){
+                const t = 1-i/p.trail.length;
+                X.globalAlpha = t*p.alpha*0.25*p.z;
+                X.strokeStyle = hsl({h:p.h,s:p.s,l:p.l+5},1);
+                X.beginPath();
+                X.moveTo(p.trail[i-1].x,p.trail[i-1].y);
+                X.lineTo(p.trail[i].x,p.trail[i].y);
+                X.stroke();
+            }
+            X.restore();
+        }
+
+        // 画粒子
+        const sz = p.size*p.z;
+        const al = p.alpha*(0.6+Math.sin(p.angle*2)*0.15)*p.z;
+        X.save();
+        X.globalAlpha = al;
+        X.fillStyle = hsl({h:p.h,s:p.s,l:p.l},1);
+        X.shadowBlur = 10*p.z;
+        X.shadowColor = hsl({h:p.h,s:p.s+5,l:p.l-8},0.5);
+        X.beginPath();
+        X.arc(x,y,sz,0,Math.PI*2);
+        X.fill();
+        X.restore();
     });
+
+    // 中心脉冲光晕
+    const pulse = 0.5+Math.sin(frame*0.025)*0.3;
+    const glowR = Math.min(W,H)*0.08*(beatMode?beatScale:1)*pulse;
+    const gg = X.createRadialGradient(cx,cy,0,cx,cy,glowR);
+    gg.addColorStop(0,'rgba(200,160,150,0.06)');
+    gg.addColorStop(0.5,'rgba(180,140,140,0.02)');
+    gg.addColorStop(1,'transparent');
+    X.fillStyle=gg;
+    X.beginPath(); X.arc(cx,cy,glowR,0,Math.PI*2); X.fill();
 
     // 心形轮廓
-    ctx.save();
-    ctx.globalAlpha = 0.1 + Math.sin(frame*0.025)*0.06;
-    ctx.strokeStyle = `hsla(15, 20%, 65%, 0.5)`;
-    ctx.lineWidth = 1;
-    ctx.shadowBlur = 20;
-    ctx.shadowColor = `hsla(15, 20%, 60%, 0.3)`;
-    ctx.beginPath();
-    const scale = Math.min(W,H)*0.013*(beatMode ? beatScale : 1);
-    for (let t = 0; t <= Math.PI*2; t += 0.05) {
-        const p = heartPoint(t, scale);
-        t === 0 ? ctx.moveTo(cx+p.x, cy+p.y) : ctx.lineTo(cx+p.x, cy+p.y);
+    X.save();
+    X.globalAlpha = 0.06+Math.sin(frame*0.02)*0.04;
+    X.strokeStyle = 'rgba(200,170,160,0.3)';
+    X.lineWidth = 1; X.shadowBlur = 25; X.shadowColor = 'rgba(200,160,150,0.2)';
+    X.beginPath();
+    const sc=Math.min(W,H)*0.013*(beatMode?beatScale:1);
+    for(let t=0;t<=Math.PI*2;t+=0.04){
+        const p=heartXY(t,sc);
+        t===0?X.moveTo(cx+p.x,cy+p.y):X.lineTo(cx+p.x,cy+p.y);
     }
-    ctx.closePath();
-    ctx.stroke();
-    ctx.restore();
+    X.closePath(); X.stroke(); X.restore();
 }
 
-// 漂浮粒子
-function drawFloatingParticles() {
-    for (let i = particles.length-1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx; p.y += p.vy;
-        p.vy -= 0.015;
-        p.life -= p.decay;
-        ctx.save();
-        ctx.globalAlpha = p.life * 0.7;
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 6;
-        ctx.shadowColor = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
-        if (p.life <= 0) particles.splice(i, 1);
+// ============ 漂浮粒子 ============
+function drawFloat() {
+    for(let i=floatPts.length-1;i>=0;i--){
+        const p=floatPts[i];
+        p.x+=p.vx; p.y+=p.vy; p.vy-=0.012; p.life-=p.decay;
+        X.save();
+        X.globalAlpha=p.life*0.6;
+        X.fillStyle=p.color; X.shadowBlur=5; X.shadowColor=p.color;
+        X.beginPath(); X.arc(p.x,p.y,p.size*p.life,0,Math.PI*2); X.fill();
+        X.restore();
+        if(p.life<=0) floatPts.splice(i,1);
     }
 }
 
 function showText() {
-    const msg = document.getElementById('msgInput').value || '余生请多指教';
-    document.getElementById('mainText').textContent = msg + ' ✨';
+    const msg=document.getElementById('msgInput').value||'余生请多指教';
+    document.getElementById('mainText').textContent=msg+' ✨';
     document.getElementById('mainText').classList.add('show');
     document.getElementById('subText').classList.add('show');
-
-    for (let i = 0; i < 80; i++) {
-        const angle = Math.random()*Math.PI*2;
-        const speed = Math.random()*3+0.8;
-        const mc = randMorandi(MORANDI.heart);
-        particles.push({
-            x: W/2, y: H/2,
-            vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed-1.5,
-            size: Math.random()*3+1, life: 1, decay: 0.007,
-            color: `hsl(${mc.h}, ${mc.s}%, ${mc.l}%)`
-        });
+    for(let i=0;i<60;i++){
+        const a=Math.random()*Math.PI*2, sp=Math.random()*2.5+0.6;
+        const mc=randC(PAL.heart);
+        floatPts.push({x:W/2,y:H/2,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1.2,
+            size:Math.random()*2.5+0.8,life:1,decay:0.006,color:hsl(mc,1)});
     }
 }
 
 function explodeHeart() {
-    heartParticles.forEach(p => {
-        const angle = Math.random()*Math.PI*2;
-        const speed = Math.random()*6+2;
-        particles.push({
-            x: p.x, y: p.y,
-            vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
-            size: p.size*2, life: 1, decay: 0.007,
-            color: `hsl(${p.h}, ${p.s}%, ${p.l}%)`
-        });
+    heartPts.forEach(p=>{
+        const a=Math.random()*Math.PI*2, sp=Math.random()*5+2;
+        floatPts.push({x:p.x,y:p.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
+            size:p.size*1.5,life:1,decay:0.006,color:hsl({h:p.h,s:p.s,l:p.l},1)});
     });
-    setTimeout(() => { particles = []; createHeart(); }, 2500);
+    setTimeout(()=>{floatPts=[];createHeart();},2500);
 }
 
-function toggleBeat() { beatMode = !beatMode; }
+function toggleBeat(){beatMode=!beatMode;}
 
-canvas.addEventListener('click', (e) => {
-    for (let i = 0; i < 25; i++) {
-        const angle = Math.random()*Math.PI*2;
-        const speed = Math.random()*2.5+0.8;
-        const mc = randMorandi(MORANDI.heart);
-        particles.push({
-            x: e.clientX, y: e.clientY,
-            vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
-            size: Math.random()*2.5+0.8, life: 1, decay: 0.01,
-            color: `hsl(${mc.h}, ${mc.s}%, ${mc.l}%)`
-        });
+C.addEventListener('click',e=>{
+    for(let i=0;i<20;i++){
+        const a=Math.random()*Math.PI*2, sp=Math.random()*2+0.6;
+        const mc=randC(PAL.heart);
+        floatPts.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
+            size:Math.random()*2+0.6,life:1,decay:0.009,color:hsl(mc,1)});
     }
 });
 
 createHeart();
 
-function loop() {
-    requestAnimationFrame(loop);
-    frame++;
-    drawBg();
-    drawHeart();
-    drawFloatingParticles();
-    if (particles.length > 1200) particles.splice(0, 400);
+function loop(){
+    requestAnimationFrame(loop); frame++;
+    drawBg(); drawHeart(); drawFloat();
+    if(floatPts.length>1000)floatPts.splice(0,300);
 }
-
 loop();
-setTimeout(showText, 2500);
+setTimeout(showText,2500);
 </script>
 </body>
 </html>
